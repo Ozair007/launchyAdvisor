@@ -55,7 +55,6 @@ launchify/
 │   ├── app.py
 │   └── local.py
 ├── requirements.txt
-├── promptsInterview.json
 ├── .gitignore
 └── README.md
 ```
