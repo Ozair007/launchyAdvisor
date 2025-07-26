@@ -4,7 +4,7 @@ A modular agent-based system for answering business, legal, and marketing questi
 
 ## Features
 
-- **Orchestrator Agent**: Routes queries to relevant expert agents.
+- **Orchestrator Agent**: Calls the appropriate expert agents and synthesizes a structured final response.
 - **Finance, Legal, Marketing Agents**: Specialized modules for domain-specific answers.
 - **Local LLM**: Uses Ollama for privacy and speed.
 - **Streamlit UI**: Simple web interface for interactive querying.
@@ -28,7 +28,7 @@ A modular agent-based system for answering business, legal, and marketing questi
 
 3. **Install Ollama and download your desired model**
    - [Ollama installation guide](https://ollama.com/download)
-   - Example: `ollama pull llama3:latest`
+   - Example: `ollama pull gemma3n:e2b`
 
 4. **Run the Streamlit app**
    ```sh
@@ -51,7 +51,12 @@ launchify/
 │   │   ├── legal_agent.py
 │   │   ├── marketing_agent.py
 │   │   └── orchestrator_agent.py
-│   ├── ollama_utils.py
+│   ├── ui
+│   │   └── streamlit.py
+│   ├── utils
+│   │   ├── json_formatter.py
+│   │   ├── ollama_utils.py
+│   │   └── prompts.py
 │   ├── app.py
 │   └── local.py
 ├── requirements.txt
