@@ -1,4 +1,9 @@
-from ollama_utils import get_ollama_llm
+from utils.ollama_utils import get_ollama_llm
+from utils.prompts import FINANCE_AGENT_PROMPT
+
+"""FinanceAgent handles finance-related queries
+by providing insights on budget, ROI, investments, and costs.
+"""
 
 
 class FinanceAgent:
@@ -6,12 +11,5 @@ class FinanceAgent:
         self.llm = get_ollama_llm()
 
     def answer(self, query):
-        prompt = (
-            f"""
-            Finance question: {query}\n
-            Return ONLY a JSON object with the following fields:\n
-            can_afford (true/false), estimated_cost (number), budget_remaining (number), rationale (string).\n
-            Do not include any explanation outside the JSON.
-            """
-        )
+        prompt = FINANCE_AGENT_PROMPT.format(query=query)
         return self.llm.invoke(prompt)

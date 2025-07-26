@@ -1,7 +1,16 @@
 from .finance_agent import FinanceAgent
 from .legal_agent import LegalAgent
 from .marketing_agent import MarketingAgent
-from ollama_utils import get_ollama_llm
+from utils.prompts import ORCHESTRATOR_AGENT_PROMPT
+from utils.ollama_utils import get_ollama_llm
+
+"""
+OrchestratorAgent coordinates multiple agents to handle queries
+by routing them to the appropriate agent based on keywords in the query.
+
+It combines insights from Finance, Legal, and Marketing agents
+to provide a comprehensive response.
+"""
 
 
 class OrchestratorAgent:
@@ -15,6 +24,7 @@ class OrchestratorAgent:
         insights = {}
         called_agents = []
 
+        """Check for keywords in the query to determine which agents to call."""
         if any(word in query.lower() for word in ["budget", "roi", "invest", "cost", "afford"]):
             insights["budget"] = self.finance.answer(query)
             called_agents.append("FinanceAgent")
@@ -31,18 +41,8 @@ class OrchestratorAgent:
             insights["marketing"] = self.marketing.answer(query)
             called_agents = ["FinanceAgent", "LegalAgent", "MarketingAgent"]
 
-        prompt = (
-            f"""
-            You are the OrchestratorAgent. Given the following insights from relevant experts,
-            generate a structured JSON response with:\n
-            - final_decision (string)\n
-            - insights (object with keys: budget, legal, marketing)\n
-            - recommendations (list of strings)\n
-            Only include agents that were called.\n\n
-            User Query: {query}\n\n
-            Insights:\n{insights}\n\n
-            Return ONLY the JSON object as described above.
-            """
-        )
+        prompt = ORCHESTRATOR_AGENT_PROMPT.format(
+            query=query, insights=insights)
+
         final_response = self.llm.invoke(prompt)
         return final_response
