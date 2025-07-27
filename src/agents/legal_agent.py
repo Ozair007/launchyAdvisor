@@ -1,7 +1,8 @@
 from utils.ollama_utils import get_ollama_chat_llm
 from utils.prompts import LEGAL_AGENT_PROMPT
 
-"""LegalAgent handles legal-related queries
+"""
+LegalAgent handles legal-related queries
 by providing insights on compliance, regulations, and legal recommendations.
 """
 

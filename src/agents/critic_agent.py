@@ -1,7 +1,8 @@
 from utils.ollama_utils import get_ollama_chat_llm
 from utils.prompts import CRITIC_EXPERT_AGENT_PROMPT
 
-"""CriticExpertAgent reviews launch plans
+"""
+CriticExpertAgent reviews launch plans
 by providing insights on feasibility, budget, and legal compliance.
 """
 
