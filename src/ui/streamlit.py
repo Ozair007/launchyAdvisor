@@ -1,4 +1,5 @@
 import streamlit as st
+from langchain_core.messages import AIMessage
 from agents.orchestrator_agent import OrchestratorAgent
 from agents.critic_agent import CriticExpertAgent
 from utils.json_formatter import json_formatter
@@ -32,22 +33,8 @@ def run_streamlit_app():
                 obj = json.loads(result) if isinstance(result, str) else result
             except Exception:
                 obj = result
-            st.subheader("Final Decision")
-            st.write(obj.get("final_decision", "No decision provided."))
-            st.subheader("Recommendations")
-            for rec in obj.get("recommendations", []):
-                st.markdown(f"- {rec}")
-            st.subheader("Agent Insights")
-            insights = obj.get("insights", {})
-            if "budget" in insights:
-                st.markdown("**Finance Agent:**")
-                st.json(insights["budget"])
-            if "legal" in insights:
-                st.markdown("**Legal Agent:**")
-                st.json(insights["legal"])
-            if "marketing" in insights:
-                st.markdown("**Marketing Agent:**")
-                st.json(insights["marketing"])
+            st.write("### Orchestrator Agent Response")
+            st.json(obj, expanded=True)
 
     elif mode == "Critic Expert Agent (review your plan)":
         st.write("Paste your launch plan below for expert critique:")
@@ -57,16 +44,12 @@ def run_streamlit_app():
             with st.spinner("Reviewing..."):
                 feedback = critic.review_plan(plan_json)
             try:
+                if isinstance(feedback, AIMessage):
+                    feedback = feedback.content
                 feedback = json_formatter(feedback)
                 obj = json.loads(feedback) if isinstance(
                     feedback, str) else feedback
             except Exception:
                 obj = feedback
-            st.subheader("Critic Expert Agent Feedback")
-            st.write(obj.get("feedback", feedback))
-            st.subheader("Risks")
-            for risk in obj.get("risks", []):
-                st.markdown(f"- {risk}")
-            st.subheader("Improvements")
-            for imp in obj.get("improvements", []):
-                st.markdown(f"- {imp}")
+            st.write("### Critic Expert Agent Feedback")
+            st.json(obj, expanded=True)
