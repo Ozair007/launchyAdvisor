@@ -1,26 +1,11 @@
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
 from langchain_core.tools import tool
-from pydantic import BaseModel, Field
 from utils.ollama_utils import get_ollama_chat_llm
-
 from .finance_agent import FinanceAgent
 from .legal_agent import LegalAgent
 from .marketing_agent import MarketingAgent
 from utils.prompts import ORCHESTRATOR_AGENT_PROMPT
-
-
-class FinanceInput(BaseModel):
-    query: str = Field(description="The user's query related to finance.")
-
-
-class LegalInput(BaseModel):
-    query: str = Field(
-        description="The user's query related to legal or compliance.")
-
-
-class MarketingInput(BaseModel):
-    query: str = Field(
-        description="The user's query related to marketing or launch strategies.")
+from utils.agents_input_schema import FinanceInput, LegalInput, MarketingInput
 
 
 """

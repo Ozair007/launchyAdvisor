@@ -1,7 +1,8 @@
 from utils.ollama_utils import get_ollama_chat_llm
 from utils.prompts import FINANCE_AGENT_PROMPT
 
-"""FinanceAgent handles finance-related queries
+"""
+FinanceAgent handles finance-related queries
 by providing insights on budget, ROI, investments, and costs.
 """
 
