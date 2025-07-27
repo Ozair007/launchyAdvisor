@@ -22,9 +22,8 @@ class OrchestratorAgent:
         self.finance_agent = FinanceAgent()
         self.legal_agent = LegalAgent()
         self.marketing_agent = MarketingAgent()
-        self.llm = get_ollama_chat_llm()  # Use ChatOllama for tool calling
+        self.llm = get_ollama_chat_llm()
 
-        # Define tools using the @tool decorator
         @tool(args_schema=FinanceInput)
         def get_finance_insights(query: str) -> str:
             """Provides insights related to finance, budget, ROI, investments, or costs."""
