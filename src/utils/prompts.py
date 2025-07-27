@@ -5,8 +5,9 @@ ORCHESTRATOR_AGENT_PROMPT = """
             - insights (object with keys: budget, legal, marketing): Summarize each agent's findings.
             - recommendations (list of strings): List practical next steps or improvements.\n
             User Query: {query}\n\n
-            Insights:\n{insights}\n
-            Only include agents that were called.\n\n
+            Insights:\n{insights}\n\n
+            Only include agents that were called.\n
+			Called agents:\n{called_agents}
             """
 
 MARKETING_AGENT_PROMPT = """
